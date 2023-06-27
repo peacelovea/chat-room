@@ -1,6 +1,6 @@
 ## server
 - 初始化：npm init -y
-- 安装依赖：npm i express mongoose nodemon socket.io bcrypt cors dotenv
+- yarn add express mongoose nodemon socket.io bcrypt cors dotenv
 - server根目录新建index.js,package中增加启动脚本命令
 ```
   "scripts": {
@@ -15,3 +15,5 @@ MONGO_URL="mongodb://localhost:27017/chat"
 
 ## app
 - 初始化：npx create-react-app chat-app
+- 安装依赖：yarn add axios styled-components react-router-dom
+- 
