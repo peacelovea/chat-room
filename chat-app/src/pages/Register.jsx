@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Logo from "../assets/logo.svg";
 import 'react-toastify/dist/ReactToastify.css';
@@ -7,91 +7,99 @@ import { ToastContainer, toast } from "react-toastify"
 import axios from "axios";
 import { registerRoute } from "../utils/APIRoutes";
 const toastOptions = {
-    position: "bottom-right",
-    autoClose: 5000,
-    pauseOnHover: true,
-    draggable: true,
-    theme: "dark",
+  position: "bottom-right",
+  autoClose: 5000,
+  pauseOnHover: true,
+  draggable: true,
+  theme: "dark",
 }
 
 function Register() {
-    const [values, setValues] = useState({
-        username: "",
-        email: "",
-        password: "",
-        confirmPassword: ""
-    })
+  const navigate = useNavigate()
+  const [values, setValues] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: ""
+  })
 
-    const handleSubmit = async (event) => {
-        event.preventDefault()
-        if (handleValidation()) {
-            const { username, password, email, confirmPassword } = values
-            const { data } = await axios.post(registerRoute, { username, password, email })
-        }
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+    if (handleValidation()) {
+      const { username, password, email } = values
+      const { data } = await axios.post(registerRoute, { username, password, email })
+      if (data.status === false) {
+        toast.error(data.msg, toastOptions)
+      }
+      if (data.status === true) {
+        localStorage.setItem("chat-app-user", JSON.stringify(data.user))
+      }
+      navigate("/")
+    }
+  }
+
+  const handleValidation = () => {
+    const { password, email, confirmPassword } = values
+    if (password !== confirmPassword) {
+      toast.error("请输入相同密码", toastOptions)
+      return false
+    } else if (password.length < 8) {
+      toast.error("密码最少为8位", toastOptions);
+      return false;
+    } else if (email === "") {
+      toast.error("请输入邮箱", toastOptions);
+      return false;
     }
 
-    const handleValidation = () => {
-        const { password, email, confirmPassword } = values
-        if (password !== confirmPassword) {
-            toast.error("请输入相同密码", toastOptions)
-            return false
-        } else if (password.length < 8) {
-            toast.error("密码最少为8位", toastOptions);
-            return false;
-        } else if (email === "") {
-            toast.error("请输入邮箱", toastOptions);
-            return false;
-        }
+    return true
+  }
 
-        return true
-    }
-
-    const handleChange = (event) => {
-        setValues({ ...values, [event.target.name]: event.target.value })
-    }
+  const handleChange = (event) => {
+    setValues({ ...values, [event.target.name]: event.target.value })
+  }
 
 
-    return (
-        <>
-            <FormContainer>
-                <form action="" onSubmit={(event) => handleSubmit(event)}>
-                    <div className="brand">
-                        <img src={Logo} alt="logo" />
-                        <h1>snappy</h1>
-                    </div>
-                    <input
-                        type="text"
-                        placeholder="Username"
-                        name="username"
-                        onChange={(e) => handleChange(e)}
-                    />
-                    <input
-                        type="email"
-                        placeholder="Email"
-                        name="email"
-                        onChange={(e) => handleChange(e)}
-                    />
-                    <input
-                        type="password"
-                        placeholder="Password"
-                        name="password"
-                        onChange={(e) => handleChange(e)}
-                    />
-                    <input
-                        type="password"
-                        placeholder="Confirm Password"
-                        name="confirmPassword"
-                        onChange={(e) => handleChange(e)}
-                    />
-                    <button type="submit">Create User</button>
-                    <span>
-                        Already have an account ? <Link to="/login">Login.</Link>
-                    </span>
-                </form>
-            </FormContainer>
-            <ToastContainer />
-        </>
-    )
+  return (
+    <>
+      <FormContainer>
+        <form action="" onSubmit={(event) => handleSubmit(event)}>
+          <div className="brand">
+            <img src={Logo} alt="logo" />
+            <h1>snappy</h1>
+          </div>
+          <input
+            type="text"
+            placeholder="Username"
+            name="username"
+            onChange={(e) => handleChange(e)}
+          />
+          <input
+            type="email"
+            placeholder="Email"
+            name="email"
+            onChange={(e) => handleChange(e)}
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            name="password"
+            onChange={(e) => handleChange(e)}
+          />
+          <input
+            type="password"
+            placeholder="Confirm Password"
+            name="confirmPassword"
+            onChange={(e) => handleChange(e)}
+          />
+          <button type="submit">Create User</button>
+          <span>
+            Already have an account ? <Link to="/login">Login.</Link>
+          </span>
+        </form>
+      </FormContainer>
+      <ToastContainer />
+    </>
+  )
 }
 
 const FormContainer = styled.div`

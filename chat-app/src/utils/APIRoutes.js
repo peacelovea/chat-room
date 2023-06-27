@@ -1,2 +1,2 @@
-const host = "https://127.0.0.1:5000"
-export const registerRoute = `${host}/api/auth`
+const host = "http://127.0.0.1:5000"
+export const registerRoute = `${host}/api/auth/register`

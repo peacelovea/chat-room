@@ -15,5 +15,5 @@ MONGO_URL="mongodb://localhost:27017/chat"
 
 ## app
 - 初始化：npx create-react-app chat-app
-- 安装依赖：yarn add axios styled-components react-router-dom
+- 安装依赖：yarn add axios styled-components react-router-dom react-toastify
 - 
