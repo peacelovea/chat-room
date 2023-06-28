@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Logo from "../assets/logo.svg";
@@ -33,8 +33,8 @@ function Register() {
       }
       if (data.status === true) {
         localStorage.setItem("chat-app-user", JSON.stringify(data.user))
+        navigate("/")
       }
-      navigate("/")
     }
   }
 
@@ -57,6 +57,13 @@ function Register() {
   const handleChange = (event) => {
     setValues({ ...values, [event.target.name]: event.target.value })
   }
+
+  // localStorage有账号则直接进入聊天页面
+  useEffect(() => {
+    if (localStorage.getItem("chat-app-user")) {
+      navigate("/")
+    }
+  }, [])
 
 
   return (
@@ -91,9 +98,9 @@ function Register() {
             name="confirmPassword"
             onChange={(e) => handleChange(e)}
           />
-          <button type="submit">Create User</button>
+          <button type="submit">注册并登录</button>
           <span>
-            Already have an account ? <Link to="/login">Login.</Link>
+            已经拥有帐户 ？<Link to="/login">登录</Link>
           </span>
         </form>
       </FormContainer>
