@@ -6,13 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from "react-toastify"
 import axios from "axios";
 import { loginRoute } from "../utils/APIRoutes";
-const toastOptions = {
-  position: "bottom-right",
-  autoClose: 5000,
-  pauseOnHover: true,
-  draggable: true,
-  theme: "dark",
-}
+import { toastOptions } from "../utils/constants";
 
 function Login() {
   const navigate = useNavigate()
