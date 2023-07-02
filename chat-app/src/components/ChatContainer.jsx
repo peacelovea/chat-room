@@ -2,6 +2,7 @@ import React from 'react'
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
+import Logout from "../components/Logout";
 
 function ChatContainer({ currentChat }) {
     return (
@@ -15,6 +16,7 @@ function ChatContainer({ currentChat }) {
                         <h3>{currentChat?.username}</h3>
                     </div>
                 </div>
+                <Logout/>
             </div>
         </Container>
     )
