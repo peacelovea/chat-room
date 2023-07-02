@@ -17,7 +17,7 @@ function SetAvatar() {
     const [selectedAvatar, setSelectedAvatar] = useState();
 
     const setProfilePicture = async () => {
-        if (!selectedAvatar) {
+        if (!selectedAvatar && selectedAvatar !== 0) {
             toast.error("请选择头像", toastOptions)
         } else {
             const user = await JSON.parse(localStorage.getItem("chat-app-user"))
@@ -36,7 +36,7 @@ function SetAvatar() {
             }
         }
     }
-    
+
     useEffect(() => {
         if (!localStorage.getItem("chat-app-user")) navigate("/login");
     }, []);
@@ -89,7 +89,7 @@ function SetAvatar() {
                                     <img
                                         src={`data:image/svg+xml;base64,${avatar}`}
                                         alt="avatar"
-                                        key={avatar}
+                                        key={index}
                                         onClick={() => setSelectedAvatar(index)}
                                     />
                                 </div>
