@@ -3,8 +3,14 @@ import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import Logout from "../components/Logout";
+import ChatInput from "../components/ChatInput";
 
 function ChatContainer({ currentChat }) {
+
+    const handleSendMsg = async (msg) => {
+
+    }
+
     return (
         <Container>
             <div className="chat-header">
@@ -16,8 +22,14 @@ function ChatContainer({ currentChat }) {
                         <h3>{currentChat?.username}</h3>
                     </div>
                 </div>
-                <Logout/>
+                <Logout />
             </div>
+
+            <div className="chat-message">
+
+            </div>
+
+            <ChatInput handleSendMsg={handleSendMsg} />
         </Container>
     )
 }
